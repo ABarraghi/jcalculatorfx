@@ -21,3 +21,19 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Eclipse IDE files/dirs #
+.project
+.classpath
+.settings/
+
+# Mac # 
+.DS_Store
+src/.DS_Store
+src/com/.DS_Store
+src/com/github/.DS_Store
+src/com/github/abarraghi/.DS_Store
+bin/.DS_Store
+bin/com/.DS_Store
+bin/com/github/.DS_Store
+bin/com/github/abarraghi/.DS_Store
