@@ -57,25 +57,36 @@ public class CalculatorGUI extends Application {
 	    buttonPane.setMinSize(324.48, 405.12);
 	    buttonPane.setGridLinesVisible(true);
 	    
-	    for(int i = 0; i < 3; i++) {
-	    	for(int j = 0; j < 5; j++) {
-	    		mainButtons[j][i] = new Button();
+	    for(int i = 0; i < 5; i++) {
+	    	for(int j = 0; j < 4; j++) {
+	    		mainButtons[i][j] = new Button();
 	    		final String BUTTON_TEXT = mainButtonText[i][j];
-	    		mainButtons[j][i].setText(BUTTON_TEXT);
-	    
-	    		mainButtons[j][i].setOnAction(e -> {
-	    			formula += BUTTON_TEXT;
-	    			formulaBar.setText(formula);
-	    		});
+	    		System.out.println(BUTTON_TEXT);
 	    		
 	    		if(BUTTON_TEXT.equals("=")) {
-	    			GridPane.setColumnSpan(mainButtons[j][i], 2);
-	    			buttonPane.add(mainButtons[j][i], j, i);
+	    			GridPane.setColumnSpan(mainButtons[i][j], 2);
+	    			buttonPane.add(mainButtons[i][j], j, i);
+	    			
+	    			mainButtons[i][j].setText(BUTTON_TEXT);
+	    		    
+		    		mainButtons[i][j].setOnAction(e -> {
+		    			formula += BUTTON_TEXT;
+		    			formulaBar.setText(formula);
+		    		});
 	    			break;
 	    		}
 	    		
-	    		else
-	    			buttonPane.add(mainButtons[j][i], j, i);
+	    		else {
+	    			buttonPane.add(mainButtons[i][j], j, i);
+	    			
+	    			mainButtons[i][j].setText(BUTTON_TEXT);
+	    		    
+		    		mainButtons[i][j].setOnAction(e -> {
+		    			formula += BUTTON_TEXT;
+		    			formulaBar.setText(formula);
+		    		});
+	    		}
+	    			
 	    	}
 	    }
 		
