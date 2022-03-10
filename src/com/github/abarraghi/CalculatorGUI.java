@@ -9,7 +9,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
 public class CalculatorGUI extends Application {
 	
 	Button[][] mainButtons;
@@ -19,7 +18,7 @@ public class CalculatorGUI extends Application {
 			{"8","9","(",")"},
 			{"+","-","*","/"},
 			{"!","%","^","~"},
-			{"C",".","="}
+			{"<","C",".","="}
 			
 	}; 
 	String formula = "";
@@ -67,40 +66,40 @@ public class CalculatorGUI extends Application {
 	    		final String BUTTON_TEXT = mainButtonText[i][j];
 	    		System.out.println(BUTTON_TEXT);
 	    		
-	    		if(BUTTON_TEXT.equals("=")) {
-	    			GridPane.setColumnSpan(mainButtons[i][j], 2);
-	    			buttonPane.add(mainButtons[i][j], j, i);
-	    			
-	    			mainButtons[i][j].setText(BUTTON_TEXT);
-	    		    
-		    		mainButtons[i][j].setOnAction(e -> {
-		    			pf = new PostfixConverter(tokenizeInput(formula).split(","));
-		    			String postfixFormula = pf.infixToPostfix();
-		    			calc = new Calculator(postfixFormula.split(","));
-		    			result = calc.calculate();
-		    			formulaBar.setText(Float.toString(result));
-		    		});
-		    		break;
-	    		}
+	    		buttonPane.add(mainButtons[i][j], j, i);
+    			
+    			mainButtons[i][j].setText(BUTTON_TEXT);
 	    		
-	    		else {
-	    			buttonPane.add(mainButtons[i][j], j, i);
-	    			
-	    			mainButtons[i][j].setText(BUTTON_TEXT);
-	    			
-	    			if(BUTTON_TEXT.equals("C")) {
+	    		switch(BUTTON_TEXT) {
+	    		
+	    			case "=":
 	    				mainButtons[i][j].setOnAction(e -> {
-	    					formula = "";
-			    			formulaBar.setText("");
+			    			pf = new PostfixConverter(tokenizeInput(formula).split(","));
+			    			String postfixFormula = pf.infixToPostfix();
+			    			calc = new Calculator(postfixFormula.split(","));
+			    			result = calc.calculate();
+			    			formulaBar.setText(Float.toString(result));
 			    		});
-	    			}
-	    		    
-	    			else {
+	    				break;
+	    			case "<":
+	    				mainButtons[i][j].setOnAction(e -> {
+	    					formula = formula.substring(0,formula.length()-1);
+	    					formulaBar.setText(formula);
+	    				});
+	    				break;
+	    			case "C":
+	    				mainButtons[i][j].setOnAction(e -> {
+		    				formula = "";
+				    		formulaBar.setText("");
+				    	});
+	    				break;
+	    			default:
 	    				mainButtons[i][j].setOnAction(e -> {
 			    			formula += BUTTON_TEXT;
 			    			formulaBar.setText(formula);
 			    		});
-	    			}
+	    				break;
+	    			
 	    		}
 	    			
 	    	}
