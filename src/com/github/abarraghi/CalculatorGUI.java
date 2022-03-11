@@ -1,7 +1,6 @@
 package com.github.abarraghi;
 
 import javafx.application.*;
-import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.shape.*;
 import javafx.scene.control.*;
@@ -13,18 +12,17 @@ public class CalculatorGUI extends Application {
 	
 	Button[][] mainButtons;
 	String[][] mainButtonText = {
-			{"0","1","2","3"},
-			{"4","5","6","7"},
-			{"8","9","(",")"},
-			{"+","-","*","/"},
-			{"!","%","^","~"},
+			{"0","1","(",")"},
+			{"2","3","+","-"},
+			{"4","5","*","/"},
+			{"6","7","!","%"},
+			{"8","9","^","~"},
 			{"<","C",".","="}
 			
 	}; 
 	String formula = "";
 	PostfixConverter pf;
 	Calculator calc;
-	float result;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -44,13 +42,11 @@ public class CalculatorGUI extends Application {
 		base.setY(0);
 		base.setWidth(384);
 		base.setHeight(720);
-		base.setArcWidth(30.0); 
-	    base.setArcHeight(20.0); 
 	    base.setFill(Color.MAROON);
 	    
 	    formulaBar.setLayoutX(30.72);
 	    formulaBar.setLayoutY(44.16);
-	    formulaBar.setMinWidth(314.88);
+	    formulaBar.setMinWidth(324.48);
 	    formulaBar.setMinHeight(80.64);
 	    formulaBar.setEditable(false);
 	    
@@ -58,7 +54,6 @@ public class CalculatorGUI extends Application {
 	    buttonPane.setLayoutX(30.72);
 	    buttonPane.setLayoutY(195.84);
 	    buttonPane.setMinSize(324.48, 405.12);
-	    buttonPane.setGridLinesVisible(true);
 	    
 	    for(int i = 0; i < 6; i++) {
 	    	for(int j = 0; j < 4; j++) {
@@ -67,8 +62,11 @@ public class CalculatorGUI extends Application {
 	    		System.out.println(BUTTON_TEXT);
 	    		
 	    		buttonPane.add(mainButtons[i][j], j, i);
-    			
+	    		buttonPane.setGridLinesVisible(false);
     			mainButtons[i][j].setText(BUTTON_TEXT);
+    			mainButtons[i][j].setMinWidth(80.64);
+    			mainButtons[i][j].setMinHeight(80.64);
+    			
 	    		
 	    		switch(BUTTON_TEXT) {
 	    		
@@ -77,13 +75,14 @@ public class CalculatorGUI extends Application {
 			    			pf = new PostfixConverter(tokenizeInput(formula).split(","));
 			    			String postfixFormula = pf.infixToPostfix();
 			    			calc = new Calculator(postfixFormula.split(","));
-			    			result = calc.calculate();
-			    			formulaBar.setText(Float.toString(result));
+			    			formula = Float.toString(calc.calculate());
+			    			formulaBar.setText(formula);
 			    		});
 	    				break;
 	    			case "<":
 	    				mainButtons[i][j].setOnAction(e -> {
-	    					formula = formula.substring(0,formula.length()-1);
+	    					if(formula.length()>0)
+	    						formula = formula.substring(0,formula.length()-1);
 	    					formulaBar.setText(formula);
 	    				});
 	    				break;
